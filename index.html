@@ -59,19 +59,29 @@
     <div class="main-wrapper">
         <!-- Topbar -->
         <header class="topbar">
-            <button class="menu-toggle" id="menuToggle">&#9776;</button>
-            <div class="search-box">
-                <span class="search-icon">&#128269;</span>
-                <input type="text" id="globalSearch" placeholder="Buscar clientes, pedidos, produtos..." autocomplete="off">
-                <div class="search-results" id="searchResults"></div>
-            </div>
-            <div class="topbar-right">
-<div class="user-profile">
-                    <div class="user-avatar">MS</div>
-                    <div class="user-info">
-                        <span class="user-name">Marcelo Soares</span>
-                        <span class="user-role">Administrador</span>
+            <div class="topbar-row-main">
+                <button class="menu-toggle" id="menuToggle">&#9776;</button>
+                <span class="topbar-brand">Madeireira Soares</span>
+                <div class="search-box search-desktop">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" id="globalSearch" placeholder="Buscar clientes, pedidos, produtos..." autocomplete="off">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">MS</div>
+                        <div class="user-info">
+                            <span class="user-name">Marcelo Soares</span>
+                            <span class="user-role">Administrador</span>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="topbar-row-search">
+                <div class="search-box search-mobile">
+                    <span class="search-icon">&#128269;</span>
+                    <input type="text" id="globalSearchMobile" placeholder="Buscar clientes, pedidos, produtos..." autocomplete="off">
+                    <div class="search-results" id="searchResultsMobile"></div>
                 </div>
             </div>
         </header>

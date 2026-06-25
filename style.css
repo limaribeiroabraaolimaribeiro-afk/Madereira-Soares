@@ -34,11 +34,23 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-main);
     color: var(--text-primary);
-    overflow-x: hidden;
+}
+
+img,
+svg,
+canvas {
+    max-width: 100%;
 }
 
 /* ================================================
@@ -225,17 +237,32 @@ body {
    TOPBAR
    ================================================ */
 .topbar {
-    height: var(--topbar-height);
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
     padding: 0 24px;
-    gap: 16px;
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.topbar-row-main {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.topbar-row-search {
+    display: none;
+}
+
+.topbar-brand {
+    display: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--wood-dark);
+    white-space: nowrap;
 }
 
 .menu-toggle {
@@ -247,6 +274,11 @@ body {
     padding: 6px 10px;
     border-radius: 6px;
     color: var(--text-primary);
+    flex-shrink: 0;
+}
+
+.search-mobile {
+    display: none;
 }
 
 .search-box {
@@ -1348,37 +1380,273 @@ body {
 }
 
 @media (max-width: 768px) {
+
+    /* ---- Reset overflow global ---- */
+    html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    /* ---- Sidebar: sobreposta, escondida por padrão ---- */
     .sidebar {
         transform: translateX(-100%);
     }
     .sidebar.open {
         transform: translateX(0);
     }
+
+    /* ---- Main wrapper ---- */
     .main-wrapper {
         margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* ---- Topbar: duas linhas ---- */
+    .topbar {
+        padding: 10px 14px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .topbar-row-main {
+        height: auto;
+        gap: 10px;
     }
     .menu-toggle {
         display: block;
     }
-    .stats-grid {
-        grid-template-columns: 1fr;
+    .topbar-brand {
+        display: block;
+        flex: 1;
+        text-align: center;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-    .form-row {
-        flex-direction: column;
+    .search-desktop {
+        display: none !important;
     }
-    .topbar {
-        padding: 0 12px;
+    .user-profile,
+    .topbar-right {
+        display: none !important;
     }
-    .user-info {
-        display: none;
+    .topbar-row-search {
+        display: block;
+        margin-top: 8px;
     }
+    .search-mobile {
+        display: block;
+        max-width: 100%;
+    }
+    .search-mobile input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* ---- Área de conteúdo ---- */
     .content {
-        padding: 16px;
+        padding: 14px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 !important;
+        overflow-x: hidden;
     }
+
+    /* ---- Stats cards: 1 coluna ---- */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .stat-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 18px;
+        min-height: auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .stat-value {
+        font-size: 24px;
+        line-height: 1.2;
+        word-break: break-word;
+        max-width: calc(100% - 56px);
+    }
+    .stat-label {
+        max-width: calc(100% - 56px);
+    }
+    .stat-icon {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+    .stat-chart {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+    .stat-chart svg {
+        width: 100%;
+        max-width: 100%;
+        height: 24px;
+    }
+
+    /* ---- Dashboard grid: 1 coluna, ordem mobile ---- */
+    .dashboard-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .dashboard-main {
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .dashboard-side {
+        order: 1;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* ---- Cards genéricos ---- */
+    .card {
+        padding: 16px;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        border-radius: 14px;
+    }
+    .card h2 {
+        font-size: 15px;
+        word-break: break-word;
+    }
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .card-header button,
+    .card-header .btn {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    /* ---- Quick Actions mobile ---- */
+    .quick-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    .quick-action-btn {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        overflow: hidden;
+    }
+    .quick-action-btn:hover {
+        transform: none;
+    }
+    .qa-icon {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+    }
+    .qa-text {
+        flex: 1;
+        min-width: 0;
+    }
+    .qa-text strong {
+        font-size: 14px;
+        line-height: 1.2;
+        white-space: normal;
+        word-break: normal;
+    }
+    .qa-text span {
+        font-size: 12px;
+        line-height: 1.3;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        display: block;
+    }
+
+    /* ---- Help card mobile ---- */
+    .help-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 16px !important;
+        overflow: hidden;
+    }
+    .help-card h2 {
+        font-size: 18px !important;
+        line-height: 1.2 !important;
+        max-width: 100%;
+        white-space: normal !important;
+        word-break: break-word;
+    }
+    .help-card p {
+        font-size: 13px;
+        line-height: 1.4;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+    .help-card .btn {
+        width: fit-content;
+        max-width: 100%;
+    }
+
+    /* ---- Tabelas: scroll horizontal DENTRO do card ---- */
+    .table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .table {
+        min-width: 680px;
+        width: 680px;
+    }
+
+    /* ---- Page header ---- */
     .page-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
     }
+    .page-header h1 {
+        font-size: 20px;
+    }
+    .page-subtitle {
+        margin-left: 0;
+    }
+
+    /* ---- Formulários ---- */
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    /* ---- Pedido itens ---- */
     .pedido-itens .item-row {
         flex-direction: column;
         align-items: stretch;
@@ -1386,9 +1654,95 @@ body {
     .pedido-itens .item-row .form-group:first-child {
         flex: auto;
     }
+    .pedido-total {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    .pedido-total strong {
+        font-size: 20px;
+    }
+
+    /* ---- Modais ---- */
+    .modal-overlay {
+        padding: 10px;
+    }
     .modal {
         max-width: 100%;
-        margin: 10px;
+        margin: 0;
+        max-height: 95vh;
+        border-radius: 14px;
+    }
+    .modal-lg {
+        max-width: 100%;
+    }
+    .modal-header {
+        padding: 16px;
+    }
+    .modal-body {
+        padding: 16px;
+    }
+    .modal-footer {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .modal-footer .btn {
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+    }
+
+    /* ---- Relatórios ---- */
+    .reports-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .chart-bar-row {
+        gap: 8px;
+    }
+    .chart-bar-label {
+        width: 70px;
+        font-size: 10px;
+    }
+    .chart-bar-value {
+        font-size: 10px;
+    }
+
+    /* ---- Configurações ---- */
+    .config-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* ---- Filter bar ---- */
+    .filter-bar {
+        flex-direction: column;
+    }
+    .filter-bar input,
+    .filter-bar select {
+        min-width: 0;
+        width: 100%;
+    }
+
+    /* ---- Botões genéricos ---- */
+    .btn {
+        font-size: 13px;
+    }
+    .action-btns {
+        flex-wrap: wrap;
+    }
+
+    /* ---- Status select ---- */
+    .status-select {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
+
+    /* ---- Empty state ---- */
+    .empty-state {
+        padding: 24px 16px;
     }
 }
 

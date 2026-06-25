@@ -1239,13 +1239,12 @@ function limparTodosDados() {
 
 // ==================== BUSCA GLOBAL ====================
 
-document.getElementById('globalSearch').addEventListener('input', function () {
-    var query = this.value.toLowerCase().trim();
-    var resultsDiv = document.getElementById('searchResults');
+function executarBusca(inputEl, resultsEl) {
+    var query = inputEl.value.toLowerCase().trim();
 
     if (query.length < 2) {
-        resultsDiv.classList.remove('show');
-        resultsDiv.innerHTML = '';
+        resultsEl.classList.remove('show');
+        resultsEl.innerHTML = '';
         return;
     }
 
@@ -1269,28 +1268,39 @@ document.getElementById('globalSearch').addEventListener('input', function () {
         }
     });
 
-    resultsDiv.innerHTML = '';
+    resultsEl.innerHTML = '';
     if (results.length === 0) {
-        resultsDiv.innerHTML = '<div class="search-result-item" style="color:var(--text-light)">Nenhum resultado encontrado</div>';
+        resultsEl.innerHTML = '<div class="search-result-item" style="color:var(--text-light)">Nenhum resultado encontrado</div>';
     } else {
         results.slice(0, 10).forEach(function (r) {
             var item = document.createElement('div');
             item.className = 'search-result-item';
             item.innerHTML = '<span class="search-result-type">' + r.tipo + '</span>' + escapeHtml(r.texto);
             item.addEventListener('click', function () {
-                resultsDiv.classList.remove('show');
-                document.getElementById('globalSearch').value = '';
+                resultsEl.classList.remove('show');
+                inputEl.value = '';
                 r.acao();
             });
-            resultsDiv.appendChild(item);
+            resultsEl.appendChild(item);
         });
     }
-    resultsDiv.classList.add('show');
+    resultsEl.classList.add('show');
+}
+
+// Busca desktop
+document.getElementById('globalSearch').addEventListener('input', function () {
+    executarBusca(this, document.getElementById('searchResults'));
+});
+
+// Busca mobile
+document.getElementById('globalSearchMobile').addEventListener('input', function () {
+    executarBusca(this, document.getElementById('searchResultsMobile'));
 });
 
 document.addEventListener('click', function (e) {
     if (!e.target.closest('.search-box')) {
         document.getElementById('searchResults').classList.remove('show');
+        document.getElementById('searchResultsMobile').classList.remove('show');
     }
 });
 
